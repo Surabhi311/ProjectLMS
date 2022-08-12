@@ -1,0 +1,51 @@
+﻿body {
+    background: #eeeded;
+}
+
+
+
+
+
+
+
+
+
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.imglogin {
+    max-width: 100%;
+    height: auto;
+}
+
+
+
+
+.row {
+    clear: both;
+    padding: 50px;
+    margin: 50px;
+}
+
+.column_login {
+    float: left;
+    width: 45%;
+    margin: 10px;
+}
+
+.loginbutton {
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}

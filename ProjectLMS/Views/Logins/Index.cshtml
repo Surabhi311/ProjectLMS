@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ProjectLMS.Models.Account>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+        
+            <div class="row">
+                <div class="column_login">
+
+                    <img src="~/images/imgs/sign-up.png" class="imglogin" >
+                </div>
+                <div class="column_login">
+<form method="post" asp-controller="Logins" asp-action="Index">
+ <h1>Login page</h1>
+                        <label for="name"><b>Username</b></label>
+                        <input type="text" placeholder="Enter Username" name="UserName"id="name" required>
+                       
+                        <label for="psd"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="Password" id="psd" required>
+                        <br>
+                        <br>
+                       <input type="submit"  class="loginbutton" value="Login">
+    <div style="color:red">
+        @ViewBag.Message
+    </div>
+</form>
+</div>
+            </div>
