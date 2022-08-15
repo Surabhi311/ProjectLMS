@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<ProjectLMS.Models.Book>
 
+@{
+    Layout = "~/Views/Shared/Other.cshtml";
+}
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,7 +16,7 @@
     
        
             <h2>Welcome User!
-            <a asp-controller="Logins" id="login" class="btn btn-primary float-right">Logout</a>
+           
             </h2>
               <nav class="navbar navbar-expand-lg navbar-light bg-light">
                <a class="navbar-brand" >Navbar</a>
@@ -23,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                <ul class="navbar-nav">
                  <li class="nav-item ">
-                     <a class="nav-link "  role="button" asp-controller="LendRequests" asp-action="Index" aria-haspopup="true" aria-expanded="false">
+                     <a class="nav-link "  role="button" asp-controller="LendRequests" asp-action="All" aria-haspopup="true" aria-expanded="false">
                        Issued books
                      </a>
                      
@@ -74,12 +77,13 @@
                 <div class="card-body">
                    
                   <!--Title-->
-                  <form  asp-controller="LendRequests" asp-action="Lend"  asp-route-LendId=@item.BookId>
+                  
+                  <form  asp-controller="LendRequests" asp-action="Lend"  asp-route-BookId=@item.BookId>
                   <h4 class="card-title">@item.BookTitle</h4>
                   <!--Text-->
                   <p class="card-text"> @item.Category<br/> @item.Author.AuthorName</p>
                   <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                <button type="button" class="btn btn-primary">Request</button>
+                <button type="submit" class="btn btn-primary">Request</button>
                 </form>
 
                 </div>

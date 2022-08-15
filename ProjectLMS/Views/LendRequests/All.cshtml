@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-@model IEnumerable<ProjectLMS.Models.LendRequest>
+﻿@model IEnumerable<ProjectLMS.Models.LendRequest>
 
 @{
     ViewData["Title"] = "Index";
@@ -35,9 +34,9 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-   
+           
             
-              <tr>
+                <tr>
                     <td>
                 @Html.DisplayFor(modelItem => item.LendStatus)
             </td>
@@ -54,12 +53,17 @@
                 @Html.DisplayFor(modelItem => item.Book.BookTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Username)
+                @Html.DisplayFor(modelItem => item.User.Password)
             </td>
-            
+            <td>
+                   <form asp-controller="LendRequests" asp-action="Return"  asp-route-LendId=@item.LendId asp-route-BookId=@item.BookId>
+                            <td> <button class="btn btn-primary">Return</button></td>
+                        </form>
+            </td>
         </tr>
         
         
 }
     </tbody>
 </table>
+

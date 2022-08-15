@@ -1,5 +1,7 @@
-﻿@{
+﻿@model IEnumerable<ProjectLMS.Models.LendRequest>
+@{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/Other.cshtml";
 }
  <head>
         <meta charset="utf-8">
@@ -22,10 +24,10 @@
     
         <header>
             <h1>Library Management System
-            <a href="login.html" id="login" class="btn btn-primary float-right">Login</a>
+            
             </h1>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" >Navbar</a>
+               
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -47,18 +49,12 @@
                           Publication 
                         </a> 
                       </li>
-
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          LR management
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                          <a class="dropdown-item" href="#">Create</a>
-                          <a class="dropdown-item" href="#">Read</a>
-                          <a class="dropdown-item" href="#">Update</a>
-                          <a class="dropdown-item" href="#">Delete</a>
-                        </div>
-                      </li>
+                     <li class="nav-item ">
+                      <a class="nav-link " asp-controller="LendRequests" asp-action="admin_dash" role="button" aria-haspopup="true" aria-expanded="false">
+                        LR management
+                      </a>
+                     
+                    </li>
                     
                     <li class="nav-item ">
                       <a class="nav-link " asp-controller="Books" asp-action="Index" role="button" aria-haspopup="true" aria-expanded="false">
@@ -85,19 +81,20 @@
             <tbody>
                  
                 @foreach (var item in Model) {
-                     
+
                 <tr>
-                  
-                    <td> @item.LendId</td>
-                    <td>@item.User.Username</td>
-                    <td>@item.Book.BookTitle</td>
-                     <form  asp-controller="LendRequests" asp-action="Approved"  asp-route-BookId=@item.BookId>
-                    <td><button class="btn btn-success">Approve</button></td>
+                    @if (@item.LendStatus == "Requested")
+                    {
+                        <td> @item.LendId</td>
+                        <td>@item.User.Username</td>
+                        <td>@item.Book.BookTitle</td>
+                        <form  asp-controller="LendRequests" asp-action="Approved"  asp-route-LendId=@item.LendId>
+                            <td><button class="btn btn-success">Approve</button></td>
                         </form>
-                         <form asp-controller="LendRequests" asp-action="Declined"  asp-route-BookId=@item.BookId>
-                       <td> <button class="btn btn-danger">Decline</button></td>
-                       </form>
-                       
+                        <form asp-controller="LendRequests" asp-action="Declined"  asp-route-LendId=@item.LendId>
+                            <td> <button class="btn btn-danger">Decline</button></td>
+                        </form>
+                    }
                 </tr>
                 }
                

@@ -20,7 +20,7 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
 }
 
-.imglogin {
+.imglogin,img {
     max-width: 100%;
     height: auto;
 }

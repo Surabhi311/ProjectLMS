@@ -24,8 +24,13 @@ namespace ProjectLMS.Controllers
         // GET: LendRequests
         public async Task<IActionResult> Index()
         {
-            var lMS_dbContext = _context.LendRequests.Include(l => l.Book).Include(l => l.User);
-            return View(await lMS_dbContext.ToListAsync());
+            var username = HttpContext.Session.GetString("Username");
+            var user = _login.getUserByName(username);
+            var User = _context.LendRequests.Where(u => u.UserId == user.UserId).Include(i => i.Book).Include(i => i.User);
+
+            return View(await User.ToListAsync());
+
+            
         }
         public ViewResult admin_dash()
         {
@@ -45,6 +50,7 @@ namespace ProjectLMS.Controllers
                 return View("RequestedError");
             }
             _context.Books.SingleOrDefault(b => b.BookId == bookId).NoOfCopies--;
+            _context.Books.SingleOrDefault(b => b.BookId == bookId).IssuedBooks++;
             LendRequest lendRequest = new LendRequest()
             {
                 LendStatus = "Requested",
@@ -59,17 +65,71 @@ namespace ProjectLMS.Controllers
 
             return View();
         }
-        public ViewResult Approved(int bookId)
+        public async Task<IActionResult> All()
         {
+            var username = HttpContext.Session.GetString("Username");
+            var user = _login.getUserByName(username);
+            var User = _context.LendRequests.Where(u => u.UserId == user.UserId && u.LendStatus.Equals("Approved")).Include(i=>i.Book).Include(i=>i.User);
+            
+            return View(await User.ToListAsync());
 
-
-            return View();
+           
         }
-        public ViewResult Declined(int bookId)
+        public ActionResult Approved(int LendId)
         {
+            var username = HttpContext.Session.GetString("UserName");
+            var user = _login.getUserByName(username);
+            var allreq = _context.Books.Include(l => l.Author).Include(l => l.Publisher);
 
-            return View();
+            var lr = _context.LendRequests.FirstOrDefault(l => l.LendId == LendId);
+           
+
+            lr.LendStatus = "Approved";
+            _context.SaveChanges();
+
+
+
+            return RedirectToAction("admin_dash","Lendrequests");
+
         }
+        public ActionResult Return(int LendId, int bookId)
+        {
+            var username = HttpContext.Session.GetString("UserName");
+            var user = _login.getUserByName(username);
+            var allreq = _context.Books.Include(l => l.Author).Include(l => l.Publisher);
+
+            var lr = _context.LendRequests.FirstOrDefault(l => l.LendId == LendId);
+            var expected_date = lr.LendDate.AddDays(3);
+            lr.ReturnDate = DateTime.Now;
+            lr.FineAmount = 0;
+
+
+            if (lr.ReturnDate > expected_date)
+            {
+                var n = lr.ReturnDate.Subtract(expected_date).TotalDays;
+                lr.FineAmount = lr.FineAmount + (n * 10);
+            }
+            _context.Books.SingleOrDefault(b => b.BookId == bookId).NoOfCopies++;
+            _context.Books.SingleOrDefault(b => b.BookId == bookId).IssuedBooks--;
+            lr.LendStatus = "Returned";
+            _context.SaveChanges();
+
+
+
+            return RedirectToAction("All", "Lendrequests");
+
+        }
+        public ActionResult Declined(int LendId)
+        {
+            var lr = _context.LendRequests.FirstOrDefault(l => l.LendId == LendId);
+
+            lr.LendStatus = "Declined";
+            _context.SaveChanges();
+
+            return RedirectToAction("admin_dash", "Lendrequests"); ;
+        }
+        
+
 
         // GET: LendRequests/Details/5
         public async Task<IActionResult> Details(int? id)
