@@ -30,7 +30,7 @@ Can view all his past Records/Requests.
 **Tools** > **NuGet Package Manager** > **Package Manager Console**
 and enter these commands
 ```sh
-Scaffold-DbContext "Server=localhost;Database=<DB-NAME>;Trusted_Connection=True;"-OutputDir Models (To scaffold All Database tables in your MVC Application)
+Scaffold-DbContext "Server=localhost;Database=<DB-NAME>;Trusted_Connection=True;"-OutputDir Models 
 ```
 ```sh
 Add provider Name
