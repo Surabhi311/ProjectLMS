@@ -1,4 +1,5 @@
-Library Management System is a Online Library Web Application made using ASP.NET MVC and Frontend built using HTML CSS It is a simple, user-friendly and easy to navigate.
+#Project-LMS
+Library Management System(LMS) is a Online Library Web Application made using ASP.NET MVC and Frontend built using HTML CSS It is a simple, user-friendly and easy to navigate.
 
 FEATURES
 For Admin :
